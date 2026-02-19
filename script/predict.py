@@ -121,7 +121,7 @@ def get_prediction(cfg, solver, relation_vocab, dataset):
     df = {"query_node": query_node,
           'query_relation':query_rel,
           "pred_node": pred_nodes,
-          "probability": pred}
+          "prediction_score": pred}
 
     df = pd.DataFrame(df)
     df = df.drop_duplicates()
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     df = get_prediction(cfg, solver, relation_vocab, _dataset)
     print("Predictions done")
     df = merge_with_entity_vocab(df, _dataset, entity_vocab, relation_vocab)
-    df = df.sort_values(['query_node','query_relation', 'probability'], ascending=[True, False,False])
+    df = df.sort_values(['query_node','query_relation', 'prediction_score'], ascending=[True, False,False])
     logger.warning("Link prediction done")
     logger.warning("Saving to file")
     print(os.path.join(working_dir, "predictions.csv"))
